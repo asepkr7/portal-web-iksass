@@ -66,7 +66,7 @@
                                 <h4>Data {{ $title }}</h4>
                                 <div class="card-header-form">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search">
+                                        <input type="text" name="search" class="form-control" placeholder="Search">
                                         <div class="input-group-btn">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -104,7 +104,7 @@
                         </td>
                         <td>{{ $posts->firstItem() + $key }}</td>
 
-                        @if (!empty($post->image) && $post->image !== null)
+                        @if ($post->image)
                             <td><img src="{{ asset('storage/' . $post->image) }}" height="35px" alt="Foto Pegawai"
                                     class="rounded-circle mr-1"></td>
                         @else
@@ -133,18 +133,19 @@
                         <td>
                             <div class="form-group row">
                                 @if (Auth::user()->role == 'admin')
-                                    <a href="/" class="btn btn-primary btn-sm mr-1"> <i class="fas fa-eye"></i></a>
+                                    <a href="/" class="btn btn-primary btn-sm mr-1 btn-small"> <i
+                                            class="fas fa-eye"></i></a>
                                     <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-warning btn-sm ">
                                         <i class="fas fa-edit"></i></a>
                                     <form action="{{ route('dashboard.posts.edit', $post->slug, 'edit') }}"
-                                        class="align-content-center">
+                                        class="align-content-center btn-sm">
                                     </form>
                                     <form action="{{ route('dashboard.posts.destroy', $post->slug) }}" method="POST"
-                                        class="d-inline">
+                                        class="d-inline ml-3 mt-1">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="btn btn-danger" id="delete-button">
-                                            <i class="fas fa-trash"></i> Delete
+                                        <button type="button" class="btn btn-danger btn-sm mr-3" id="delete-button">
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
                                 @else
@@ -158,6 +159,30 @@
 
             </table>
         </div>
+    </div>
+    <div class="card-footer text-right">
+        <div class="text-left">
+            <i> Showing {{ $posts->firstItem() }} to {{ $posts->lastItem() }} of {{ $posts->total() }} Entires</i>
+        </div>
+        <nav class="pull-right d-lg-inline-block">
+            <ul class="pagination mb-0">
+                <li class="page-item{{ $posts->onFirstPage() ? ' disabled' : '' }}">
+                    <a class="page-link" href="{{ $posts->previousPageUrl() }}"><i class="fas fa-chevron-left"></i></a>
+                </li>
+
+                @if ($posts->lastPage() > 1)
+                    @for ($i = 1; $i <= $posts->lastPage(); $i++)
+                        <li class="page-item{{ $posts->currentPage() === $i ? ' active' : '' }}">
+                            <a class="page-link" href="{{ $posts->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                @endif
+
+                <li class="page-item{{ $posts->hasMorePages() ? '' : ' disabled' }}">
+                    <a class="page-link" href="{{ $posts->nextPageUrl() }}"><i class="fas fa-chevron-right"></i></a>
+                </li>
+            </ul>
+        </nav>
     </div>
     </div>
     </div>
