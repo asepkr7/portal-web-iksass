@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +29,17 @@ Route::get('/fa-verify', [TwoFactorController::class, 'showVerifyForm'])->name('
 Route::post('/fa-verify', [TwoFactorController::class, 'verify'])->name('2fa.verify.post');
 Route::post('/fa-resend', [LoginController::class, 'resendTwoFactorCode'])->name('2fa.resend');
 
-Route::get('/dashboard/post', [PostController::class, 'index']);
-Route::get('/dashboard', function () {
-    return 'Selamat Datang di Dashboard!';
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard/posts', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.posts');
+// Route::get('/dashboard/posts/create', [PostController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.posts');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard/posts', [PostController::class, 'index'])->name('dashboard.posts');
+    Route::get('/dashboard/posts/create', [PostController::class, 'create'])->name('dashboard.posts.create');
+    Route::post('/dashboard/posts', [PostController::class, 'store'])->name('dashboard.posts.store');
+    Route::get('/dashboard/posts/{post}/edit', [PostController::class, 'edit'])->name('dashboard.posts.edit');
+    Route::put('/dashboard/posts/{post}', [PostController::class, 'update'])->name('dashboard.posts.update');
+    Route::delete('/dashboard/posts/{post}', [PostController::class, 'destroy'])->name('dashboard.posts.destroy');
+    Route::post('/summernote-upload', [PostController::class, 'uploadImage'])->name('summernote.upload');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});

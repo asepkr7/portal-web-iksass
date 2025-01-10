@@ -16,6 +16,13 @@
     <link rel="stylesheet" href="/template/node_modules/bootstrap-daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="/template/node_modules/prismjs/themes/prism.css">
     <link rel="stylesheet" href="/template/node_modules/select2/dist/css/select2.min.css">
+
+    <link rel="stylesheet" href="/template/node_modules/summernote/dist/summernote-bs4.css">
+    <link rel="stylesheet" href="/template/node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/template/node_modules/codemirror/theme/duotone-dark.css">
+    <link rel="stylesheet" href="/template/node_modules/selectric/public/selectric.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 
 
@@ -311,6 +318,10 @@
     <script src="/template/node_modules/prismjs/prism.js"></script>
 
     <!-- JS Libraies -->
+    <script src="/template/node_modules/summernote/dist/summernote-bs4.js"></script>
+    <script src="/template/node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="/template/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/template/node_modules/selectric/public/jquery.selectric.min.js"></script>
 
     <!-- Template JS File -->
     <script src="/template/assets/js/scripts.js"></script>
