@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -43,3 +44,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/summernote-upload', [PostController::class, 'uploadImage'])->name('summernote.upload');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+Route::get('/news', [HomeController::class, 'index'])->name('news');
+Route::get('/news/{post}', [HomeController::class, 'show'])->name('news.show');

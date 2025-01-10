@@ -43,11 +43,14 @@ class PostController extends Controller
         ]);
 
         $imagePath = $request->file('image') ? $request->file('image')->store('posts', 'public') : null;
+        $datePart = now()->format('d/m/y'); // Format tanggal: 29/04/05
+        $randomPart = rand(10, 99); // Angka acak 2 digit
+        $slug = Str::slug($request->title) . '-' . str_replace('/', '', $datePart) . '-' . $randomPart;
 
         Post::create([
             'title' => $request->title,
             'label' => $request->label,
-            'slug' => Str::slug($request->title),
+            'slug' => $slug,
             'content' => $request->content,
             'image' => $imagePath,
             'user_id' => Auth()->user()->id
@@ -58,7 +61,10 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('Dashboard.Posts.edit', compact('post'));
+        return view('Dashboard.Posts.edit',  [
+            'title' => 'Posts',
+            'post' => $post,
+        ]);
     }
 
     public function update(Request $request, Post $post)

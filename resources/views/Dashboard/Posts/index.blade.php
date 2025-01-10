@@ -104,7 +104,7 @@
                         </td>
                         <td>{{ $posts->firstItem() + $key }}</td>
 
-                        @if ($post->image)
+                        @if (!empty($post->image) && $post->image !== null)
                             <td><img src="{{ asset('storage/' . $post->image) }}" height="35px" alt="Foto Pegawai"
                                     class="rounded-circle mr-1"></td>
                         @else
