@@ -10,4 +10,12 @@ class Santri extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
+
+    public function scopeFilter($query, array $filters)
+    {
+        if (isset($filters['search']) ? $filters['search'] : false) {
+            return $query->where('name', 'like', '%' . $filters['search'] . '%')
+                ->orWhere('address', 'like', '%' . $filters['search'] . '%');
+        }
+    }
 }

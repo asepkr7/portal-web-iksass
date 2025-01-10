@@ -63,7 +63,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Data {{ $title }}</h4>
+                                <h4>Daftar Post yang Dihapus</h4>
+                    <div>
+                        <a href="{{ route('dashboard.posts.deleted') }}" class="btn btn-info">Lihat Post Terhapus</a>
+                    </div>
                                 <div class="card-header-form">
                                     <div class="input-group">
                                         <input type="text" name="search" class="form-control" placeholder="Search">
@@ -133,8 +136,8 @@
                         <td>
                             <div class="form-group row">
                                 @if (Auth::user()->role == 'admin')
-                                    <a href="/" class="btn btn-primary btn-sm mr-1 btn-small"> <i
-                                            class="fas fa-eye"></i></a>
+                                    <a href="{{ route('news.show', $post->slug) }}"
+                                        class="btn btn-primary btn-sm mr-1 btn-small"> <i class="fas fa-eye"></i></a>
                                     <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-warning btn-sm ">
                                         <i class="fas fa-edit"></i></a>
                                     <form action="{{ route('dashboard.posts.edit', $post->slug, 'edit') }}"

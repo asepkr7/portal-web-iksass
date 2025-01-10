@@ -111,4 +111,55 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('dashboard.posts')->with('success', 'Post deleted successfully.');
     }
+
+    public function deleted(Request $request)
+    {
+        $search = $request->input('search');
+        $deletedPosts = Post::onlyTrashed()
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'like', "%{$search}%");
+            })
+            ->get();
+        return view('Dashboard.Posts.trash', compact('deletedPosts'));
+    }
+
+    public function restore($slug)
+    {
+        $post = Post::onlyTrashed()->where('slug', $slug)->firstOrFail();
+        $post->restore();
+        return redirect()->route('dashboard.posts.deleted')->with('success', 'Post berhasil dipulihkan.');
+    }
+
+    public function forceDelete($slug)
+    {
+        $post = Post::onlyTrashed()->where('slug', $slug)->firstOrFail();
+
+        if ($post->image) {
+            Storage::delete($post->image);
+        }
+
+        $post->forceDelete();
+        return redirect()->route('dashboard.posts.deleted')->with('success', 'Post berhasil dihapus permanen.');
+    }
+
+
+    public function restoreAll()
+    {
+        Post::onlyTrashed()->restore();
+        return redirect()->route('dashboard.posts.deleted')->with('success', 'Semua post berhasil dipulihkan.');
+    }
+
+    public function forceDeleteAll()
+    {
+        $posts = Post::onlyTrashed()->get();
+
+        foreach ($posts as $post) {
+            if ($post->image) {
+                Storage::delete($post->image);
+            }
+            $post->forceDelete();
+        }
+
+        return redirect()->route('dashboard.posts.deleted')->with('success', 'Semua post berhasil dihapus permanen.');
+    }
 }

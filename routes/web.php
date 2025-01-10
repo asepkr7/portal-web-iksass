@@ -41,7 +41,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/posts/{post}/edit', [PostController::class, 'edit'])->name('dashboard.posts.edit');
     Route::put('/dashboard/posts/{post}', [PostController::class, 'update'])->name('dashboard.posts.update');
     Route::delete('/dashboard/posts/{post}', [PostController::class, 'destroy'])->name('dashboard.posts.destroy');
-    Route::post('/summernote-upload', [PostController::class, 'uploadImage'])->name('summernote.upload');
+
+    Route::get('/dashboard/posts/deleted', [PostController::class, 'deleted'])->name('dashboard.posts.deleted');
+    // Restore & Hapus Massal
+    Route::post('/dashboard/posts/restore-all', [PostController::class, 'restoreAll'])->name('dashboard.posts.restoreAll');
+    Route::delete('/dashboard/posts/force-delete-all', [PostController::class, 'forceDeleteAll'])
+        ->name('dashboard.posts.forceDeleteAll');
+
+    // Restore & Hapus Per Item
+    Route::put('/dashboard/posts/{slug}/restore', [PostController::class, 'restore'])->name('dashboard.posts.restore');
+    Route::delete('/dashboard/posts/{slug}/forceDelete', [PostController::class, 'forceDelete'])->name('dashboard.posts.forceDelete');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 

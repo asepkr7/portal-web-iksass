@@ -45,13 +45,11 @@
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category</label>
                                     <div class="col-sm-12 col-md-7">
                                         @php
-                                        $label = ['Rutinan', 'Pengajian', 'Katolik', 'Safari Ramadhan']; @endphp
+                                        $label = ['Rutinan', 'Pengajian', 'Safari Ramadhan']; @endphp
                                         <select name="label"
                                             class="form-control  @error('label') is-invalid @enderror
                                             selectric">
-                                            <option value="Rutinan">Rutinan</option>
-                                            <option value="Pengajian">Pengajian</option>
-                                            <option value="Safari Ramadhan">Safari Ramadhan</option>
+
                                             @foreach ($label as $option)
                                                 @if ($post->label === $option)
                                                     <option selected value="{{ $option }}">{{ $option }}
