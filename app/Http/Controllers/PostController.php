@@ -146,8 +146,12 @@ class PostController extends Controller
 
     public function restoreAll()
     {
-        Post::onlyTrashed()->restore();
-        return redirect()->route('dashboard.posts.deleted')->with('success', 'Semua post berhasil dipulihkan.');
+        if (Post::onlyTrashed()->count() == 0) {
+            return redirect()->route('dashboard.posts.deleted')->with('error', 'Tidak ada post yang dapat dipulihkan.');
+        } else {
+            Post::onlyTrashed()->restore();
+            return redirect()->route('dashboard.posts.deleted')->with('success', 'Semua post berhasil dipulihkan.');
+        }
     }
 
     public function forceDeleteAll()

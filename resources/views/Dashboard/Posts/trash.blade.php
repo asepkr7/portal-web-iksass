@@ -14,6 +14,14 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -24,14 +32,16 @@
                             <form id="restore-all-form" action="{{ route('dashboard.posts.restoreAll') }}" method="POST"
                                 class="mr-2">
                                 @csrf
-                                <button type="submit" class="btn btn-warning">Pulihkan Semua</button>
+                                <button type="submit" {{ $deletedPosts->isEmpty() ? 'disabled' : '' }}
+                                    class="btn btn-success">Pulihkan Semua</button>
                             </form>
 
                             <!-- Force Delete All Form -->
                             <form action="{{ route('dashboard.posts.forceDeleteAll') }}" method="POST" id="deleteAllForm">
                                 @csrf
                                 {{-- @method('DELETE') --}}
-                                <button type="button" class="btn btn-danger" onclick="confirmDeleteAll()">
+                                <button type="button" dis class="btn btn-danger"
+                                    {{ $deletedPosts->isEmpty() ? 'disabled' : '' }} onclick="confirmDeleteAll()">
                                     Hapus Permanen Semua
                                 </button>
                             </form>
@@ -61,7 +71,8 @@
                                         <td>
                                             <!-- Restore Form -->
                                             <form class="d-inline"
-                                                action="{{ route('dashboard.posts.restore', $post->slug) }}" method="POST">
+                                                action="{{ route('dashboard.posts.restore', $post->slug) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-success btn-sm">Pulihkan</button>

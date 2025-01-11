@@ -34,4 +34,9 @@ class HomeController extends Controller
             'post' => $post
         ]);
     }
+
+    public function home()
+    {
+        return view('Home.main.index');
+    }
 }

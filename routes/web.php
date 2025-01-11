@@ -30,9 +30,8 @@ Route::get('/fa-verify', [TwoFactorController::class, 'showVerifyForm'])->name('
 Route::post('/fa-verify', [TwoFactorController::class, 'verify'])->name('2fa.verify.post');
 Route::post('/fa-resend', [LoginController::class, 'resendTwoFactorCode'])->name('2fa.resend');
 
-// Route::get('/dashboard/posts', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.posts');
-// Route::get('/dashboard/posts/create', [PostController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.posts');
-// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', fn() => redirect('/home'));
+Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/posts', [PostController::class, 'index'])->name('dashboard.posts');
