@@ -75,7 +75,7 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Content</label>
                                     <div class="col-sm-12 col-md-7">
-                                        <textarea name="content" class="summernote-simple  @error('content') is-invalid @enderror">value="{{ old('content') }}"</textarea>
+                                        <textarea name="content" class="summernote-simple  @error('content') is-invalid @enderror">{{ old('content') }}</textarea>
                                         @error('content')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

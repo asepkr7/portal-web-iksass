@@ -30,11 +30,14 @@
                             <!-- Force Delete All Form -->
                             <form action="{{ route('dashboard.posts.forceDeleteAll') }}" method="POST" id="deleteAllForm">
                                 @csrf
-                                @method('DELETE')
+                                {{-- @method('DELETE') --}}
                                 <button type="button" class="btn btn-danger" onclick="confirmDeleteAll()">
                                     Hapus Permanen Semua
                                 </button>
                             </form>
+
+
+
 
                         </div>
                     </div>
@@ -123,12 +126,13 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Debug: Tambahkan console.log
-                    console.log('Form submitted');
-                    document.getElementById('deleteAllForm').submit();
+                    const form = document.getElementById('deleteAllForm');
+                    // Jika form menggunakan POST method, pastikan @method('DELETE') bekerja
+                    form.submit();
                 }
             });
         }
+
 
         // Tambahkan ini untuk debug
         document.addEventListener('DOMContentLoaded', function() {

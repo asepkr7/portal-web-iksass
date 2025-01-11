@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -151,10 +152,10 @@ class PostController extends Controller
 
     public function forceDeleteAll()
     {
+        Log::info('forceDeleteAll route is being accessed');
         $posts = Post::onlyTrashed()->get();
-
         foreach ($posts as $post) {
-            if ($post->image) {
+            if ($post->image && Storage::exists($post->image)) {
                 Storage::delete($post->image);
             }
             $post->forceDelete();

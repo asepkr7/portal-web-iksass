@@ -22,8 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');;
+Route::post('/login', [LoginController::class, 'login'])->name('login.post')->middleware('guest');;
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/fa-verify', [TwoFactorController::class, 'showVerifyForm'])->name('2fa.verify');
@@ -45,8 +45,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/posts/deleted', [PostController::class, 'deleted'])->name('dashboard.posts.deleted');
     // Restore & Hapus Massal
     Route::post('/dashboard/posts/restore-all', [PostController::class, 'restoreAll'])->name('dashboard.posts.restoreAll');
-    Route::delete('/dashboard/posts/force-delete-all', [PostController::class, 'forceDeleteAll'])
-        ->name('dashboard.posts.forceDeleteAll');
+    Route::post('/dashboard/posts/force-delete-all', [PostController::class, 'forceDeleteAll'])->name('dashboard.posts.forceDeleteAll');
+
 
     // Restore & Hapus Per Item
     Route::put('/dashboard/posts/{slug}/restore', [PostController::class, 'restore'])->name('dashboard.posts.restore');
